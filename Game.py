@@ -1,4 +1,5 @@
 import pygame
+import NPC
 
 pygame.init()
 
@@ -13,15 +14,16 @@ pygame.display.set_caption("Fallen Apart")
 
 
 #Player
-player_start_x = 200
-player_start_y = 200
-base_sprite = pygame.image.load("img/fixed_base_sprite_facing_screen.png")
-#Downscale Image 
-player_sprite = pygame.transform.scale(base_sprite, (PLAYER_WIDTH, PLAYER_HEIGHT))
-#Creates a hitbox
-player_hitbox = player_sprite.get_rect()
-#Spawn location
-player_hitbox.center = (player_start_x, player_start_y)
+player = NPC(200,200, 45, 60)
+# player_start_x = 200
+# player_start_y = 200
+# base_sprite = pygame.image.load("img/fixed_base_sprite_facing_screen.png")
+# #Downscale Image 
+# player_sprite = pygame.transform.scale(base_sprite, (PLAYER_WIDTH, PLAYER_HEIGHT))
+# #Creates a hitbox
+# player_hitbox = player_sprite.get_rect()
+# #Spawn location
+# player_hitbox.center = (player_start_x, player_start_y)
 
 
 run = True
