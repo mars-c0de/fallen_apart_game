@@ -14,7 +14,7 @@ pygame.display.set_caption("Fallen Apart")
 
 
 #Player
-player = NPC(200,200, 45, 60)
+player = NPC.NPC(screen, 200,200, 45, 60)
 # player_start_x = 200
 # player_start_y = 200
 # base_sprite = pygame.image.load("img/fixed_base_sprite_facing_screen.png")
@@ -29,7 +29,8 @@ player = NPC(200,200, 45, 60)
 run = True
 while run:
     screen.fill("blue")
-    screen.blit(player_sprite,player_hitbox)
+    
+    player.draw()
 
     #Event Handler
     for event in pygame.event.get():
