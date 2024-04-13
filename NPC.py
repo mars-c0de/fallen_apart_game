@@ -9,7 +9,10 @@ class NPC(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         base_sprite = pygame.image.load("img/fixed_base_sprite_facing_screen.png")
         self.scale_sprite = pygame.transform.scale(base_sprite, (self.width, self.height))
+        
         self.hitbox = self.scale_sprite.get_rect()
         self.hitbox.center = (self.spawn_x, self.spawn_y)
     def draw(self):
         self.screen.blit(self.scale_sprite, self.hitbox)
+    def test(self):
+        print("test function")

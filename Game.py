@@ -1,5 +1,6 @@
 import pygame
 import NPC
+import Player
 
 pygame.init()
 
@@ -14,10 +15,10 @@ pygame.display.set_caption("Fallen Apart")
 
 
 #Player
-player = NPC.NPC(screen, 200,200, 45, 60)
+player = Player.Player(screen, 500,500, 45, 60)
 # player_start_x = 200
 # player_start_y = 200
-# base_sprite = pygame.image.load("img/fixed_base_sprite_facing_screen.png")
+base_sprite = pygame.image.load("img/fixed_base_sprite_facing_screen.png")
 # #Downscale Image 
 # player_sprite = pygame.transform.scale(base_sprite, (PLAYER_WIDTH, PLAYER_HEIGHT))
 # #Creates a hitbox
@@ -26,10 +27,12 @@ player = NPC.NPC(screen, 200,200, 45, 60)
 # player_hitbox.center = (player_start_x, player_start_y)
 
 
+#player.test()
+
 run = True
 while run:
     screen.fill("blue")
-    
+    screen.blit(base_sprite, (0,0))
     player.draw()
 
     #Event Handler
