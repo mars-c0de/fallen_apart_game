@@ -119,9 +119,9 @@ while run:
         if tile.rect.collidepoint(play.hitbox.midbottom[0],play.hitbox.midbottom[1]):
             play.take_damage()
         elif tile.rect.collidepoint(play.hitbox.midright[0], play.hitbox.midright[1]):
-            play.take_damage
+            play.take_damage()
         elif tile.rect.collidepoint(play.hitbox.midleft[0], play.hitbox.midleft[1]):
-            play.take_damage
+            play.take_damage()
         elif tile.rect.collidepoint(play.hitbox.midtop[0],play.hitbox.midtop[1]):
             play.take_damage()
         
@@ -154,7 +154,7 @@ while run:
                 play.movex = 2
             if event.key == pygame.K_d:
                 play.movex = 2
-    if play.hitbox.y > 1200:
+    if play.hitbox.y > 1200 or play.hp == 0:
         run = False
     play.update(dt)
     pygame.display.update()
