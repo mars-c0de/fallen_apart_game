@@ -9,7 +9,10 @@ pygame.init()
 screen = pygame.display.set_mode((800,600))
 
 GAME_FONT = pygame.freetype.Font(None,size=48)
+#creates an instance of Font from pygame.freetype module
 
+
+#0 = minecraft grass, 1 = water, 2 = blades of grass
 
 world_data = [
     [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,2],
@@ -28,22 +31,37 @@ world_data = [
 
 world = World.World()
 world.process_data(world_data)
-play = Player(screen, 500,450, 45, 60)
+#world: 
+play = Player(screen, 500,500, 45, 60)
+#play: instance of player class. 500 & 500 is spawnx and spawny, 45x60 is widthxheight
 clock = pygame.time.Clock()
+#clock: a clock
 
 en = Enemy(screen, 45, 60)
+#en: enemy with height 45, 60
 
 run = True
 
 
 while run:
     dt = clock.tick(60)
+    #stores the time since the last time clock.tick() was called
     
     screen.fill("blue")
-    
+    #each time we run, we empty the screen with "fill",  then run the draw() method of class instance World()
     world.draw()
+    #the draw method runs the update() method (empty) and .draw() method of 2 sprite groups: damage_group and decoration_group
+    #see world for more info
     
     GAME_FONT.render_to(screen, (0, 0), str(play.health), (255, 0, 0))
+    #runs the render_to() method on an instance of Font defined earlier.
+    #takes inputs: surface to draw on, destination coordinates, the player's health in string form, and text color
+
+    #this moves the player
+    #within updates, player_ani() is run, which is why .update() takes dt as an argument
+
+
+    #this just blits the enemy onscreen at its hitbox coords
 
     #Event Handler
     for tile in world.obstacle_list:
