@@ -31,6 +31,10 @@ class Player(pygame.sprite.Sprite):
         self.gravity = 0.3
         self.velocity = -10
         self.health = 100
+        self.collisionxl = False
+        self.collisionyu = False
+        self.collisionxr = False
+        self.collisionyd = False
 
         #ETC
 
