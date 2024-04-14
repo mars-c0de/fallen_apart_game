@@ -85,6 +85,7 @@ class Player(pygame.sprite.Sprite):
         self.height = height
         self.spawn_x = spawn_x
         self.spawn_y = spawn_y
+
         pygame.sprite.Sprite.__init__(self)
 
         #initialize its HP at 100 
@@ -103,10 +104,27 @@ class Player(pygame.sprite.Sprite):
         self.movex=0 
         self.movey=0 
         self.speed=4
+        self.time = 0
+        self.jump = False
+        self.gravity = 0.3
+        self.velocity = -10
+        self.health = 100
 
         #ETC
 
     def update(self, dt):
+        if self.jump == True:
+            self.time += dt/1000
+            self.movey = self.gravity*self.time+self.velocity
+            self.velocity += self.gravity
+
+        if self.hitbox.centery > self.spawn_y and self.jump == True:
+            self.jump = False
+            self.movey = 0
+            self.velocity = -10
+            self.time = 0
+            self.hitbox.centery = self.spawn_y
+
         self.hitbox.move_ip(self.movex,self.movey)
         
         if(self.movex != 0):
