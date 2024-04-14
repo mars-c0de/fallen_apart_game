@@ -127,10 +127,12 @@ while run:
                 #Check if under or above by checking y velocity??
                 #If below ground
                 if player.movey < 0:
+                    print("upward collision")
                     player.movey = 0
                     #player = tile[1].bottom - player.hitbox.top
                 #If above ground
                 elif player.movey >= 0:
+                    print("downward collision")
                     player.movey = 0
                     #player.hitbox.bottom = tile[1].top - player.hitbox.bottom
                 #player.movey = tile[1].bottom - player.hitbox.top
