@@ -15,13 +15,13 @@ world_data = [
     [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,2],
     [1,0,1,0,0],
     [2,2,2,0,0,2,1,0],
-    [],
-    [],
-    [],
-    [],
-    [],
+    [0],
+    [0],
+    [0],
+    [0],
+    [0],
     [0,0,0,0,0],
-    [],
+    [0],
     [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
     #[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 ]
@@ -45,8 +45,6 @@ while run:
     
     GAME_FONT.render_to(screen, (0, 0), str(play.health), (255, 0, 0))
 
-    play.update(dt)
-    en.update()
     #Event Handler
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -67,37 +65,39 @@ while run:
                     play.health = 'Dead'
                 elif type(play.health) == int:
                     play.health -=10
+            if event.key == pygame.K_q:
+                run = False
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a: 
                 play.movex = 0
             if event.key == pygame.K_d:
                 play.movex = 0
-        
         for tile in world.obstacle_list:
             #check collision in x direction
-            if tile[1].colliderect(play.hitbox):
+            if tile[1].collidepoint(play.hitbox.midtop[0],play.hitbox.midtop[1]):
+                play.hitbox.y = tile[1].midbottom[1]
+                play.collisionyu = True
+                play.velocity = 0
+                play.movey = 0
+            elif tile[1].collidepoint(play.hitbox.midleft[0],play.hitbox.midleft[1]):
+                play.hitbox.x = tile[1].midright[0]
                 play.collisionxl = True
                 play.movex = 0
+            elif tile[1].collidepoint(play.hitbox.midright[0],play.hitbox.midright[1]):
+                play.hitbox.x = tile[1].midleft[0]
+                play.collisionxr = True
+                play.movex = 0
+            elif tile[1].collidepoint(play.hitbox.midright[0],play.hitbox.midright[1]):
+                play.hitbox.x = tile[1].midleft[0]
+                play.collisionxr = True
+                play.movex = 0
             else:
-                play.collisionxl = False
                 play.collisionxr = False
-            #collision in y direction
-            if tile[1].colliderect(play.hitbox):
-                #Check if under or above by checking y velocity??
-                #If below ground
-                if play.movey < 0:
-                    print("upward collision")
-                    play.movey = 0
-                    #play = tile[1].bottom - play.hitbox.top
-                #If above ground
-                elif play.movey >= 0:
-                    print("downward collision")
-                    play.movey = 0
-                    #play.hitbox.bottom = tile[1].top - player.hitbox.bottom
-                #player.movey = tile[1].bottom - player.hitbox.top
-                #If above ground
-                #player.movey = tile[1].top - player.rect.bottom
-                #player.inair = False 
+                play.collisionxl = False
+                play.collisionyd = False
+                play.collisionyu = False
+    play.update(dt)
+    en.update()
     pygame.display.update()
 
 pygame.quit()
