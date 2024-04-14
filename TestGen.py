@@ -1,7 +1,9 @@
 import pygame
 import Blocks
 import sprites
+import pygame.freetype
 
+pygame.init()
 screen = pygame.display.set_mode((800,600))
 #Number of tiles
 TILE_TYPES = 3
@@ -12,7 +14,7 @@ for x in range(TILE_TYPES):
     img = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
     img_list.append(img)
 
-
+GAME_FONT = pygame.freetype.Font(None,size=48)
 
 def draw_bg():
 	screen.fill("blue")
@@ -88,6 +90,8 @@ while run:
     damage_group.draw(screen)
     decoration_group.draw(screen)
     
+    GAME_FONT.render_to(screen, (0, 0), str(player.health), (255, 0, 0))
+
     #Event Handler
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -100,8 +104,14 @@ while run:
             if event.key == pygame.K_d:
                 player.player_ani.direction(1)
                 player.movex = 1 * player.speed
+            if event.key == pygame.K_SPACE:
+                player.jump = True
+                if player.health == 10:
+                    player.health = 'Dead'
+                elif type(player.health) == int:
+                    player.health -=10
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_a:
+            if event.key == pygame.K_a: 
                 player.movex = 0
             if event.key == pygame.K_d:
                 player.movex = 0
