@@ -3,11 +3,11 @@ import Blocks
 import pygame.freetype
 import players, enemy
 screen = pygame.display.set_mode((800,600))
-TILE_TYPES = 3
+TILE_TYPES = 7
 img_list = []
 TILE_SIZE = 50
 for x in range(TILE_TYPES):
-    img = pygame.image.load(f"img/{x}.jpg")
+    img = pygame.image.load(f"img/Tiles_000{x+1}.png")
     img = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
     img_list.append(img)
     #each tile is named 0, 1, or 2
@@ -37,10 +37,10 @@ class World():
                     img_rect.y = y * TILE_SIZE
                     #img_rect.x retrieves the x coord of the top left corner, we then multiply by tilesize to place in correct spot
                     #we place these tiles in the right spot with the conditionals below
-                    tile_data = (img, img_rect)
+                    tile_data = [img, img_rect, -100]
                     #for each item in the row, make a tuple with the image & its coordinates
 
-                    if tile == 0:
+                    if tile >= 0:
                         self.obstacle_list.append(tile_data)
                         #if the value is 0, add that tuple to obstacle_list
                     elif tile == 1:
