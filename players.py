@@ -38,7 +38,6 @@ class Player(pygame.sprite.Sprite):
         self.jump = False
         self.gravity = 0.3
         self.velocity = 0
-        self.health = 100
         self.collisionxl = False
         self.collisionyu = False
         self.collisionxr = False
@@ -47,7 +46,7 @@ class Player(pygame.sprite.Sprite):
         #ETC
 
     def take_damage(self):
-        self.hp -= 2
+        self.hp = 0
 
     def update(self, dt):
         # if self.collisionyd == True:
