@@ -28,7 +28,7 @@ world_data = [
 
 world = World.World()
 world.process_data(world_data)
-play = Player(screen, 500,450, 45, 60)
+play = Player(screen, 500,500, 45, 60)
 clock = pygame.time.Clock()
 
 en = Enemy(screen, 45, 60)
@@ -67,8 +67,10 @@ while run:
                 play.collisionyu = False
             if tile[1].collidepoint(play.hitbox.midbottom[0],play.hitbox.midbottom[1]):
                 play.hitbox.y = tile[1].midtop[1] - play.hitbox.height
+                play.jump = False
                 play.collisionyd = True
                 play.time = 0
+                play.velocity = -10
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
