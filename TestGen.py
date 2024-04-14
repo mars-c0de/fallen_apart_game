@@ -8,7 +8,7 @@ img_list = []
 TILE_SIZE = int(screen.get_width()/16)
 for x in range(TILE_TYPES):
     img = pygame.image.load(f"img/{x}.jpg")
-    img = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE)).set_colorkey("blue")
+    img = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
     img_list.append(img)
 
 
