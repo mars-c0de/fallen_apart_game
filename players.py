@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite):
         self.hitbox.center = (self.spawn_x, self.spawn_y)
 
         #variables to control movement
-        self.movex=0 
+        self.movex=2 
         self.movey=0 
         self.speed=4
         self.time = 0
@@ -59,10 +59,12 @@ class Player(pygame.sprite.Sprite):
             self.hitbox.centery = self.spawn_y
             self.spawn_y = self.hitbox.centery
             self.collisionyd = True
-
-        self.hitbox.move_ip(self.movex,self.movey)
         
-        if(self.movex != 0):
+        if self.hitbox.x != 500:
+            self.hitbox.x = 500
+        self.hitbox.move_ip(0,self.movey)
+        
+        if(self.movex != 2):
             self.screen.blit(self.player_ani.next_frame(dt), self.hitbox)
         else:
             self.screen.blit(self.player_ani.frame, self.hitbox)

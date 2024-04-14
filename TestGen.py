@@ -15,18 +15,18 @@ GAME_FONT = pygame.freetype.Font(None,size=48)
 #0 = minecraft grass, 1 = water, 2 = blades of grass
 
 world_data = [
-    [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,2],
-    [1,0,1,0,0],
-    [2,2,2,0,0,2,1,0],
-    [0],
-    [0],
-    [0],
-    [0],
-    [0],
-    [0,0,0,0,0],
-    [0],
-    [0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0],
+    [0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0],
+    [0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0],
+    [0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0],
+    [0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0],
+    [0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0],
+    [0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0],
+    [0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0],
+    [0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0],
+    [0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 ]
 
 world = World.World()
@@ -49,7 +49,7 @@ while run:
     
     screen.fill("blue")
     #each time we run, we empty the screen with "fill",  then run the draw() method of class instance World()
-    world.draw()
+    world.draw(play.movex, dt)
     #the draw method runs the update() method (empty) and .draw() method of 2 sprite groups: damage_group and decoration_group
     #see world for more info
     
@@ -75,12 +75,12 @@ while run:
             elif tile[1].collidepoint(play.hitbox.midleft[0],play.hitbox.midleft[1]):
                 play.hitbox.x = tile[1].midright[0]
                 play.collisionxl = True
-                play.movex = 0
+                play.movex = 2
                 break
             elif tile[1].collidepoint(play.hitbox.midright[0],play.hitbox.midright[1]):
                 play.hitbox.x = tile[1].midleft[0] - play.hitbox.width
                 play.collisionxr = True
-                play.movex = 0
+                play.movex = 2
                 break
             elif tile[1].collidepoint(play.hitbox.midbottom[0],play.hitbox.midbottom[1]):
                 play.hitbox.y = tile[1].midtop[1] - play.hitbox.height
@@ -107,11 +107,11 @@ while run:
             if event.key == pygame.K_a:
                 play.player_ani.direction(0)
                 if not play.collisionxl:
-                    play.movex = -1 * play.speed
+                    play.movex = 1
             if event.key == pygame.K_d:
                 play.player_ani.direction(1)
                 if not play.collisionxr:
-                    play.movex = 1 * play.speed
+                    play.movex = -1
             if event.key == pygame.K_SPACE:
                 if play.collisionyd == True:
                     play.velocity = -10
@@ -124,9 +124,9 @@ while run:
                 run = False
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a: 
-                play.movex = 0
+                play.movex = 2
             if event.key == pygame.K_d:
-                play.movex = 0
+                play.movex = 2
     play.update(dt)
     en.update()
     pygame.display.update()

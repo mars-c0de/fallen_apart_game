@@ -29,7 +29,7 @@ class World():
             #row represents the entire nested list AKA row 
             for x, tile in enumerate(row):
                 #x represents which position in the row it is, tile represents the actual value of that item
-                if tile >= 0:
+                if tile >= 0 and tile != 3:
                     img = img_list[tile]
                     #acceess the image corresponding to index tile, as defined above
                     img_rect = img.get_rect()
@@ -53,7 +53,36 @@ class World():
                         #if the value is 2, create a Decoration() at the given position & add to sprite group
 
 
-    def draw(self):
+    def draw(self, move, dt):
+        #print(self.obstacle_list[0][1].x)
+        if move == 1 and self.obstacle_list[0][1].x < 450:
+            dx = 5
+            for sprite in self.damage_group:
+                if sprite.rect.x < 0 and sprite.rect.x + dx > 0:
+                    sprite.rect.x = 0
+                sprite.rect.x += dx
+            for sprite in self.decoration_group:
+                if sprite.rect.x < 0 and sprite.rect.x + dx > 0:
+                    sprite.rect.x = 0
+                sprite.rect.x += dx
+            for tile in self.obstacle_list:
+                if tile[1].x < 0 and tile[1].x + dx > 0:
+                    tile[1].x = 0
+                tile[1].x += dx
+        if move == -1:
+            dx = -5
+            for sprite in self.damage_group:
+                if sprite.rect.x > 0 and sprite.rect.x + dx < 0:
+                    sprite.rect.x = 0
+                sprite.rect.x += dx
+            for sprite in self.decoration_group:
+                if sprite.rect.x > 0 and sprite.rect.x + dx < 0:
+                    sprite.rect.x = 0
+                sprite.rect.x += dx
+            for tile in self.obstacle_list:
+                if tile[1].x > 0 and tile[1].x + dx < 0:
+                    tile[1].x = 0
+                tile[1].x += dx
         for tile in self.obstacle_list:
             screen.blit(tile[0],tile[1])
         self.damage_group.update()
