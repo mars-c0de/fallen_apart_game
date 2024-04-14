@@ -20,6 +20,7 @@ class Player(pygame.sprite.Sprite):
 
         #HITBOX 
         self.hitbox = self.player_ani.frame.get_rect()
+        self.hitbox.height = self.height
         self.hitbox.center = (self.spawn_x, self.spawn_y)
 
         #make a rangebox for the player just as we did with the enemy
@@ -31,7 +32,7 @@ class Player(pygame.sprite.Sprite):
         self.rangebox.centery = self.hitbox.centery
 
         #variables to control movement
-        self.movex=0 
+        self.movex=2 
         self.movey=0 
         self.speed=4
         self.time = 0
@@ -69,20 +70,23 @@ class Player(pygame.sprite.Sprite):
                 self.time += dt/1000
                 self.movey = self.gravity*self.time+self.velocity
                 self.velocity += self.gravity
-            if self.hitbox.y > self.spawn_y:
-                self.jump = False
-                self.movey = 0
-                self.velocity = 0
-                self.time = 0
-                self.hitbox.centery = self.spawn_y
-                self.spawn_y = self.hitbox.centery
-                self.collisionyd = True
+            # if self.hitbox.y > self.spawn_y:
+            #     self.jump = False
+            #     self.movey = 0
+            #     self.velocity = 0
+            #     self.time = 0
+            #     self.hitbox.centery = self.spawn_y
+            #     self.spawn_y = self.hitbox.centery
+            #     self.collisionyd = True
 
-            self.hitbox.move_ip(self.movex,self.movey)
-            self.rangebox.move_ip(self.movex,self.movey)
+            if self.hitbox.x != self.spawn_x:
+                self.hitbox.x = self.spawn_x
+
+            self.hitbox.move_ip(0,self.movey)
+            #self.rangebox.move_ip(self.movex,self.movey)
             #move the rangebox in the same way 
             
-            if(self.movex != 0):
+            if(self.movex != 2):
                 self.screen.blit(self.player_ani.next_frame(dt), self.hitbox)
             else:
                 self.screen.blit(self.player_ani.frame, self.hitbox)
