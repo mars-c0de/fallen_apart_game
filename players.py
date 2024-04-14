@@ -34,23 +34,24 @@ class Player(pygame.sprite.Sprite):
         self.collisionxl = False
         self.collisionyu = False
         self.collisionxr = False
-        self.collisionyd = False
+        self.collisionyd = True
 
         #ETC
 
     def update(self, dt):
-        if self.jump == True:
+        if self.jump == True or self.collisionyd == False:
             self.time += dt/1000
             self.movey = self.gravity*self.time+self.velocity
             self.velocity += self.gravity
 
-        if self.hitbox.centery > self.spawn_y and self.jump == True:
+        if self.hitbox.centery > self.spawn_y and self.jump == True and self.collisionyd == False:
             self.jump = False
             self.movey = 0
             self.velocity = -10
             self.time = 0
             self.hitbox.centery = self.spawn_y
             self.spawn_y = self.hitbox.centery
+            self.collisionyd = True
 
         self.hitbox.move_ip(self.movex,self.movey)
         
