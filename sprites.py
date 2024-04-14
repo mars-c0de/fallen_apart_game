@@ -87,6 +87,7 @@ class Player(pygame.sprite.Sprite):
         self.jump = False
         self.gravity = 0.3
         self.velocity = -10
+        self.health = 100
 
     def update(self, dt):
         if self.jump == True:
