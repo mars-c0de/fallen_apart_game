@@ -1,7 +1,7 @@
 import pygame
 import Blocks
 from players import Player
-import enemy
+from enemy import Enemy
 import World
 import pygame.freetype
 
@@ -73,7 +73,7 @@ GAME_FONT = pygame.freetype.Font(None,size=48)
 play = Player(screen, 500,500, 45, 60)
 clock = pygame.time.Clock()
 
-
+en = Enemy(screen, 45, 60)
 
 run = True
 
@@ -83,8 +83,6 @@ while run:
     
     screen.fill("blue")
     
-    
-    play.update(dt)
     World.draw_bg()
     World.world.draw()
     World.damage_group.update()
@@ -133,6 +131,8 @@ while run:
                 #If above ground
                 #player.movey = tile[1].top - player.rect.bottom
                 #player.inair = False 
+    play.update(dt)
+    en.update()
     pygame.display.update()
 
 pygame.quit()
