@@ -39,11 +39,12 @@ while run:
             if event.key == pygame.K_d:
                 player.player_ani.direction(1)
                 player.movex = 1 * player.speed
+            if event.key == pygame.K_SPACE:
+                player.jump = True
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a:
                 player.movex = 0
             if event.key == pygame.K_d:
                 player.movex = 0
-
 
     pygame.display.update()
