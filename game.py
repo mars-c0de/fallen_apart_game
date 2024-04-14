@@ -1,5 +1,4 @@
 import pygame
-import sprites
 import pygame.freetype
 
 pygame.init()
@@ -16,7 +15,6 @@ pygame.display.set_caption("Fallen Apart")
 #Player
 player = sprites.Player(screen, 500,500, 45, 60)
 enemy = sprites.Enemy(screen,45,60)
-enemy2 = sprites.Enemy2(screen,45,60)
 # player_start_x = 200
 # player_start_y = 200
 
@@ -31,7 +29,6 @@ while run:
     screen.fill("blue")
     player.update(dt)
     enemy.update()
-    enemy2.update()
 
     GAME_FONT.render_to(screen, (0, 0), str(player.health), (255, 0, 0))
 

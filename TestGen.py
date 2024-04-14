@@ -1,6 +1,7 @@
 import pygame
 import Blocks
-import sprites
+from players import Player
+import enemy
 import World
 import pygame.freetype
 
@@ -69,7 +70,7 @@ GAME_FONT = pygame.freetype.Font(None,size=48)
 # world = World()
 # world.process_data(world_data)
 
-player = sprites.Player(screen, 500,500, 45, 60)
+play = Player(screen, 500,500, 45, 60)
 clock = pygame.time.Clock()
 
 
@@ -83,16 +84,16 @@ while run:
     screen.fill("blue")
     
     
-    player.update(dt)
+    play.update(dt)
     World.draw_bg()
     World.world.draw()
     World.damage_group.update()
     World.decoration_group.update()
-    player.update(dt)
+    play.update(dt)
     World.damage_group.draw(screen)
     World.decoration_group.draw(screen)
     
-    GAME_FONT.render_to(screen, (0, 0), str(player.health), (255, 0, 0))
+    GAME_FONT.render_to(screen, (0, 0), str(play.health), (255, 0, 0))
 
     #Event Handler
     for event in pygame.event.get():
@@ -101,29 +102,29 @@ while run:
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_a:
-                player.player_ani.direction(0)
-                player.movex = -1 * player.speed
+                play.player_ani.direction(0)
+                play.movex = -1 * play.speed
             if event.key == pygame.K_d:
-                player.player_ani.direction(1)
-                player.movex = 1 * player.speed
+                play.player_ani.direction(1)
+                play.movex = 1 * play.speed
             if event.key == pygame.K_SPACE:
-                player.jump = True
-                if player.health == 10:
-                    player.health = 'Dead'
-                elif type(player.health) == int:
-                    player.health -=10
+                play.jump = True
+                if play.health == 10:
+                    play.health = 'Dead'
+                elif type(play.health) == int:
+                    play.health -=10
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a: 
-                player.movex = 0
+                play.movex = 0
             if event.key == pygame.K_d:
-                player.movex = 0
+                play.movex = 0
         
         #Check Collisions
         for tile in World.world.obstacle_list:
             #check collision in x direction
-            if tile[1].colliderect(player.hitbox.x + player.movex * player.speed, player.hitbox.y, player.width, player.height):
+            if tile[1].colliderect(play.hitbox.x + play.movex * play.speed, play.hitbox.y, play.width, play.height):
                 #print("collison")
-                player.movex = 0
+                play.movex = 0
             #collision in y direction
             #if tile[1].colliderect(player.hitbox.x , player.hitbox.y + player.movey, player.width, player.height):
                 #Check if under or above by checking y velocity??
