@@ -1,15 +1,17 @@
 import pygame
 import Blocks
-from players import Player
-from enemy import Enemy
+import players
+import enemy
 import World
 import pygame.freetype
+import random
 
 pygame.init()
 screen = pygame.display.set_mode((800,600))
 
 GAME_FONT = pygame.freetype.Font(None,size=48)
 #creates an instance of Font from pygame.freetype module
+
 
 
 #0 = minecraft grass, 1 = water, 2 = blades of grass
@@ -32,12 +34,12 @@ world_data = [
 world = World.World()
 world.process_data(world_data)
 #world: 
-play = Player(screen, 500,500, 45, 60)
+play = players.Player(screen, 500,500, 45, 60)
 #play: instance of player class. 500 & 500 is spawnx and spawny, 45x60 is widthxheight
 clock = pygame.time.Clock()
 #clock: a clock
 
-en = Enemy(screen, 45, 60)
+en = enemy.Enemy(screen, 45, 60)
 #en: enemy with height 45, 60
 
 run = True
@@ -53,7 +55,7 @@ while run:
     #the draw method runs the update() method (empty) and .draw() method of 2 sprite groups: damage_group and decoration_group
     #see world for more info
     
-    GAME_FONT.render_to(screen, (0, 0), str(play.health), (255, 0, 0))
+    GAME_FONT.render_to(screen, (0, 0), str(play.hp), (255, 0, 0))
     #runs the render_to() method on an instance of Font defined earlier.
     #takes inputs: surface to draw on, destination coordinates, the player's health in string form, and text color
 
@@ -116,17 +118,54 @@ while run:
                 if play.collisionyd == True:
                     play.velocity = -10
                     play.jump = True
-                if play.health == 10:
-                    play.health = 'Dead'
-                elif type(play.health) == int:
-                    play.health -=10
+                # if play.health == 10:
+                #     play.health = 'Dead'
+                # elif type(play.health) == int:
+                #     play.health -=10
             if event.key == pygame.K_q:
                 run = False
+
+            if play.rangebox.colliderect(en.rangebox):
+                if event.key == pygame.K_j:
+                    play.take_damage()
+                    en.take_damage()
+
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a: 
                 play.movex = 0
             if event.key == pygame.K_d:
                 play.movex = 0
+
+    '''HANDLES ENEMY MOVEMENTS'''
+
+    #if the enemy senses the player nearby
+    if en.sensorbox.colliderect(play.rangebox):
+
+        #if the enemy's x coord is more right than player's x coord + 2,
+        if en.hitbox.x > play.hitbox.x+2:
+            #enemy should move left to chase the player
+            en.movex = -1 * en.speed
+        elif en.hitbox.x < play.hitbox.x+2:
+            en.movex = 1 * en.speed
+        elif play.hitbox.x-2 <= en.hitbox.x <= play.hitbox.x+2:
+            en.movex = 0
+            #I added +-2 so that if the coordinates were super close to each other, 
+            #the gamee would just treat it as essentially the same coordinate and 
+            #not make the enemy move. without this, the enemy would vibrate weirdly if
+            #it was close to you
+
+        #the above conditionals all work to alter en.movex & en.movey such that it can run this line of code, where the hitbox, rangebox, and sensorbox's positions are determined each frame
+        en.hitbox.move_ip(en.movex, en.movey)
+        en.rangebox.move_ip(en.movex, en.movey)
+        en.sensorbox.move_ip(en.movex, en.movey)
+
+    #if the player & enemy are in range, there's a 1/120 chance per frame that the enemy will attack you
+    if en.rangebox.colliderect(play.rangebox):
+        if random.randint(0,120) ==  0:
+            play.take_damage()
+        else: 
+            pass
+
     play.update(dt)
     en.update()
     pygame.display.update()
