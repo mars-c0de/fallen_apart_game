@@ -127,7 +127,6 @@ while run:
 
             if play.rangebox.colliderect(en.rangebox):
                 if event.key == pygame.K_j:
-                    play.take_damage()
                     en.take_damage()
 
         if event.type == pygame.KEYUP:
@@ -161,7 +160,7 @@ while run:
 
     #if the player & enemy are in range, there's a 1/120 chance per frame that the enemy will attack you
     if en.rangebox.colliderect(play.rangebox):
-        if random.randint(0,120) ==  0:
+        if random.randint(0,15) ==  0:
             play.take_damage()
         else: 
             pass
