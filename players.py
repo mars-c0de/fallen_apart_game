@@ -40,20 +40,16 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, dt):
         # if self.collisionyd == True:
-        #     self.jump = False
+        #     self.jump = Falsex``
         #     self.velocity = -10
         #     self.time = 0
 
-        if self.jump == True and self.collisionyd == False:
+        if self.jump == True:
             self.time += dt/1000
             self.movey = self.gravity*self.time+self.velocity
             self.velocity += self.gravity
-        if self.jump == True and self.collisionyd == True:
-            self.jump == False
 
-        print(self.collisionyd)
-        print(self.jump)
-        if self.hitbox.centery > self.spawn_y:
+        if self.hitbox.y > self.spawn_y:
             self.jump = False
             self.movey = 0
             self.velocity = -10

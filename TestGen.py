@@ -85,8 +85,10 @@ while run:
                 play.collisionyu = False
             if tile[1].collidepoint(play.hitbox.midbottom[0],play.hitbox.midbottom[1]):
                 play.hitbox.y = tile[1].midtop[1] - play.hitbox.height
+                play.jump = False
                 play.collisionyd = True
                 play.time = 0
+                play.velocity = -10
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
