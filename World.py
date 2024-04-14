@@ -52,7 +52,8 @@ class World():
                     #     self.decoration_group.add(decoration)
                     #     #if the value is 2, create a Decoration() at the given position & add to sprite group
                 elif tile == 7:
-                    self.damage_group.append(tile_data)
+                    water = Blocks.Water(img, TILE_SIZE, img_rect.x, img_rect.y)
+                    self.damage_group.add(water)
 
     def draw(self, move, dt):
         #print(self.obstacle_list[0][1].x)
