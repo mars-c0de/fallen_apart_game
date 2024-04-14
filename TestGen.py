@@ -39,9 +39,7 @@ play = players.Player(screen, 500,500, 45, 60)
 clock = pygame.time.Clock()
 #clock: a clock
 
-en = enemy.Enemy(screen, 45, 60)
-#en: enemy with height 45, 60
-
+en = enemy.Enemy(screen, 45,60)
 run = True
 
 
