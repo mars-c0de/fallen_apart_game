@@ -22,13 +22,13 @@ world_data = [
     [0],
     [0,0,0,0,0],
     [0],
-    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+    [0],
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 ]
 
 world = World.World()
 world.process_data(world_data)
-play = Player(screen, 500,500, 45, 60)
+play = Player(screen, 500,450, 45, 60)
 clock = pygame.time.Clock()
 
 en = Enemy(screen, 45, 60)
@@ -58,7 +58,7 @@ while run:
                 play.collisionxl = True
                 play.movex = 0
             elif tile[1].collidepoint(play.hitbox.midright[0],play.hitbox.midright[1]):
-                play.hitbox.x = tile[1].midleft[0]
+                play.hitbox.x = tile[1].midleft[0] - play.hitbox.width
                 play.collisionxr = True
                 play.movex = 0
             else:
@@ -66,12 +66,10 @@ while run:
                 play.collisionxl = False
                 play.collisionyu = False
             if tile[1].collidepoint(play.hitbox.midbottom[0],play.hitbox.midbottom[1]):
-                play.hitbox.bottom = tile[1].midtop[1]+0.1
-                play.jump = False
+                play.hitbox.y = tile[1].midtop[1] - play.hitbox.height
                 play.collisionyd = True
-                play.movey = 0
-            else:
-                play.collisionyd = False
+                play.time = 0
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
