@@ -3,7 +3,7 @@ import Blocks
 import pygame.freetype
 import players, enemy
 screen = pygame.display.set_mode((800,600))
-TILE_TYPES = 7
+TILE_TYPES = 8
 img_list = []
 TILE_SIZE = 50
 for x in range(TILE_TYPES):
@@ -29,29 +29,30 @@ class World():
             #row represents the entire nested list AKA row 
             for x, tile in enumerate(row):
                 #x represents which position in the row it is, tile represents the actual value of that item
-                if tile >= 0 and tile != 3:
-                    img = img_list[tile]
-                    #acceess the image corresponding to index tile, as defined above
-                    img_rect = img.get_rect()
-                    img_rect.x = x * TILE_SIZE
-                    img_rect.y = y * TILE_SIZE
-                    #img_rect.x retrieves the x coord of the top left corner, we then multiply by tilesize to place in correct spot
-                    #we place these tiles in the right spot with the conditionals below
-                    tile_data = [img, img_rect, -100]
-                    #for each item in the row, make a tuple with the image & its coordinates
-
-                    if tile >= 0:
-                        self.obstacle_list.append(tile_data)
-                        #if the value is 0, add that tuple to obstacle_list
-                    elif tile == 1:
-                        water = Blocks.Water(img, TILE_SIZE, img_rect.x, img_rect.y)
-                        self.damage_group.add(water)
-                        #if the value is 1, create a Water() at the given position & add to sprite group
-                    elif tile == 2:
-                        decoration = Blocks.Decoration(img, TILE_SIZE, img_rect.x, img_rect.y)
-                        self.decoration_group.add(decoration)
-                        #if the value is 2, create a Decoration() at the given position & add to sprite group
-
+                img = img_list[tile]
+                #acceess the image corresponding to index tile, as defined above
+                img_rect = img.get_rect()
+                img_rect.x = x * TILE_SIZE
+                img_rect.y = y * TILE_SIZE
+                #img_rect.x retrieves the x coord of the top left corner, we then multiply by tilesize to place in correct spot
+                #we place these tiles in the right spot with the conditionals below
+                tile_data = [img, img_rect, -100]
+                #for each item in the row, make a tuple with the image & its coordinates
+                if tile >= 0 and tile != 3 and tile < 7:
+                    self.obstacle_list.append(tile_data)
+                    # if tile >= 0:
+                    #     self.obstacle_list.append(tile_data)
+                    #     #if the value is 0, add that tuple to obstacle_list
+                    # elif tile == 1:
+                    #     water = Blocks.Water(img, TILE_SIZE, img_rect.x, img_rect.y)
+                    #     self.damage_group.add(water)
+                    #     #if the value is 1, create a Water() at the given position & add to sprite group
+                    # elif tile == 2:
+                    #     decoration = Blocks.Decoration(img, TILE_SIZE, img_rect.x, img_rect.y)
+                    #     self.decoration_group.add(decoration)
+                    #     #if the value is 2, create a Decoration() at the given position & add to sprite group
+                elif tile == 7:
+                    self.damage_group.append(tile_data)
 
     def draw(self, move, dt):
         #print(self.obstacle_list[0][1].x)
