@@ -4,19 +4,21 @@ import sprites
 pygame.init()
 
 SCREEN_WIDTH = 800
-SCREEN_HEIGHT = int(SCREEN_WIDTH * .75)
-PLAYER_WIDTH = 45
-PLAYER_HEIGHT = 60
+SCREEN_HEIGHT = (SCREEN_WIDTH)*0.75
+PLAYER_WIDTH = 20
+PLAYER_HEIGHT = 40
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Fallen Apart")
 
 #Player
 player = sprites.Player(screen, 500,500, 45, 60)
+enemy = sprites.Enemy(screen,45,60)
+enemy2 = sprites.Enemy2(screen,45,60)
 # player_start_x = 200
 # player_start_y = 200
 
-#player.test()
+#player.test() 
 
 clock = pygame.time.Clock()
 
@@ -26,6 +28,8 @@ while run:
     dt = clock.tick(60)
     screen.fill("blue")
     player.update(dt)
+    enemy.update()
+    enemy2.update()
 
     #Event Handler
     for event in pygame.event.get():
@@ -45,5 +49,7 @@ while run:
             if event.key == pygame.K_d:
                 player.movex = 0
 
+        if player.hitbox.colliderect(enemy2.hitbox):
+            player.movex=0
 
     pygame.display.update()

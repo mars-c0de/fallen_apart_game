@@ -1,28 +1,46 @@
 import pygame
 import random
-import sprites
 
-class NPC(pygame.sprite.Sprite):
-    def __init__(self, screen, spawn_x, spawn_y, width, height):
+enemy_spawn_x = random.randint(0,320)
+enemy_spawn_y = random.randint(0,180)
+
+class Enemy(pygame.sprite.Sprite):
+    def __init__(self, screen, width, height):
         self.screen = screen
         self.width = width
         self.height = height
 
-        self.spawn_x = spawn_x
-        self.spawn_y = spawn_y
+        self.spawn_x = enemy_spawn_x
+        self.spawn_y = enemy_spawn_y
         pygame.sprite.Sprite.__init__(self)
-        base_sprite = pygame.image.load("img/walking_cycle/Walk-Cycle_0000_L03.png")
-        self.player_sprite = pygame.transform.scale(base_sprite, (self.width, self.height))
+
+        enemy_sprite = pygame.image.load("animation/Walk-Cycle_0000_L01.png")
+        self.enemy_sprite = pygame.transform.scale(enemy_sprite, (self.width, self.height))
         #base_sprite now represents the loaded image
-        
-        self.hitbox = self.player_sprite.get_rect()
+        self.hitbox = self.enemy_sprite.get_rect()
         self.hitbox.center = (self.spawn_x, self.spawn_y)
 
-    def draw(self):
-        self.screen.blit(self.player_sprite, self.hitbox)
+    def update(self):
+        self.screen.blit(self.enemy_sprite, self.hitbox)
 
-    def test(self):
-        print("test function")
+class Enemy2(pygame.sprite.Sprite):
+    def __init__(self, screen, width, height):
+        self.screen = screen
+        self.width = width
+        self.height = height
+
+        self.spawn_x = 400
+        self.spawn_y = 500
+        pygame.sprite.Sprite.__init__(self)
+        enemy_sprite2 = pygame.image.load("animation/Walk-Cycle_0000_L01.png")
+        self.enemy_sprite2 = pygame.transform.scale(enemy_sprite2, (self.width, self.height))
+        #base_sprite now represents the loaded image
+        self.hitbox = self.enemy_sprite2.get_rect()
+        self.hitbox.center = (self.spawn_x, self.spawn_y)
+
+    def update(self):
+        self.screen.blit(self.enemy_sprite, self.hitbox)
+
 
 class player_ani():
     def direction(self, dir):
@@ -60,7 +78,6 @@ class player_ani():
         self.max_frames = 4
 
 
-
 class Player(pygame.sprite.Sprite):
     def __init__(self, screen, spawn_x, spawn_y, width, height):
         self.screen = screen
@@ -70,11 +87,15 @@ class Player(pygame.sprite.Sprite):
         self.spawn_y = spawn_y
         pygame.sprite.Sprite.__init__(self)
 
+        #initialize its HP at 100 
+        self.hp = 100
+
         #load an image for the sprite
         #player_sprite now represents the loaded image
 
         self.player_ani = player_ani()
-        #
+
+        #HITBOX 
         self.hitbox = self.player_ani.frame.get_rect()
         self.hitbox.center = (self.spawn_x, self.spawn_y)
 
@@ -83,14 +104,17 @@ class Player(pygame.sprite.Sprite):
         self.movey=0 
         self.speed=4
 
+        #ETC
+
     def update(self, dt):
         self.hitbox.move_ip(self.movex,self.movey)
+        
         if(self.movex != 0):
             self.screen.blit(self.player_ani.next_frame(dt), self.hitbox)
         else:
             self.screen.blit(self.player_ani.frame, self.hitbox)
-    def test(self):
-        print("test function")
+
+
 
 
 
