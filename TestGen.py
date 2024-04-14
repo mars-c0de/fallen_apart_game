@@ -71,24 +71,33 @@ while run:
                 play.collisionyu = True
                 play.velocity = 0
                 play.movey = 0
+                break
             elif tile[1].collidepoint(play.hitbox.midleft[0],play.hitbox.midleft[1]):
                 play.hitbox.x = tile[1].midright[0]
                 play.collisionxl = True
                 play.movex = 0
+                break
             elif tile[1].collidepoint(play.hitbox.midright[0],play.hitbox.midright[1]):
                 play.hitbox.x = tile[1].midleft[0] - play.hitbox.width
                 play.collisionxr = True
                 play.movex = 0
-            else:
-                play.collisionxr = False
-                play.collisionxl = False
-                play.collisionyu = False
-            if tile[1].collidepoint(play.hitbox.midbottom[0],play.hitbox.midbottom[1]):
+                break
+            elif tile[1].collidepoint(play.hitbox.midbottom[0],play.hitbox.midbottom[1]):
                 play.hitbox.y = tile[1].midtop[1] - play.hitbox.height
                 play.jump = False
                 play.collisionyd = True
                 play.time = 0
-                play.velocity = -10
+                play.velocity = 0
+                play.movey = 0
+                break
+            else:
+                if not tile[1].collidepoint(play.hitbox.midbottom[0],play.hitbox.midbottom[1]+0.25):
+                    play.collisionyd = False
+                else:
+                    play.collisionyd = True
+                play.collisionxr = False
+                play.collisionxl = False
+                play.collisionyu = False
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -104,7 +113,9 @@ while run:
                 if not play.collisionxr:
                     play.movex = 1 * play.speed
             if event.key == pygame.K_SPACE:
-                play.jump = True
+                if play.collisionyd == True:
+                    play.velocity = -10
+                    play.jump = True
                 if play.health == 10:
                     play.health = 'Dead'
                 elif type(play.health) == int:
