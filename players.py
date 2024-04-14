@@ -7,6 +7,7 @@ class Player(pygame.sprite.Sprite):
         self.height = height
         self.spawn_x = spawn_x
         self.spawn_y = spawn_y
+        self.in_air = True
 
         pygame.sprite.Sprite.__init__(self)
 
@@ -35,17 +36,23 @@ class Player(pygame.sprite.Sprite):
         #ETC
 
     def update(self, dt):
-        if self.jump == True:
-            self.time += dt/1000
-            self.movey = self.gravity*self.time+self.velocity
-            self.velocity += self.gravity
-
-        if self.hitbox.centery > self.spawn_y and self.jump == True:
+        if self.jump == True and self.in_air == False:
             self.jump = False
-            self.movey = 0
+            self.time += dt/1000
             self.velocity = -10
-            self.time = 0
-            self.hitbox.centery = self.spawn_y
+            self.in_air = True
+            #self.movey = self.gravity*self.time+self.velocity
+            #self.velocity += self.gravity
+        self.velocity += self.gravity
+        if self.velocity > 10:
+            self.velocity
+        self.movey += self.velocity
+        # if self.hitbox.centery > self.spawn_y and self.jump == True:
+        #     self.jump = False
+        #     self.movey = 0
+        #     self.velocity = -10
+        #     self.time = 0
+        #     self.hitbox.centery = self.spawn_y
 
         self.hitbox.move_ip(self.movex,self.movey)
         
